@@ -1,5 +1,5 @@
 # 2048-fxcg
-2048 for the Casio FX-CG (Prizm) color graphing calculator
+2048 for the Casio FX-CG (Prizm) color graphing calculator, clone of [Gabriele Cirulli's 2048](https://github.com/gabrielecirulli/2048)
 
 ## How to Compile
 - Download the SDK from `https://github.com/Jonimoose/libfxcg/releases/tag/v0.5.2` and extract it into `2048-fxcg/sdk`
