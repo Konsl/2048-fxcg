@@ -1,0 +1,214 @@
+Archive member included to satisfy reference by file (symbol)
+
+C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(GetKey.o)
+                              main.o (symbol from plugin) (_GetKey)
+C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(Bdisp_EnableColor.o)
+                              main.o (symbol from plugin) (_Bdisp_EnableColor)
+C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(RTC_GetTicks.o)
+                              rng.o (symbol from plugin) (_RTC_GetTicks)
+C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSGetDlen2.o)
+                              Game.o (symbol from plugin) (_MCSGetDlen2)
+C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(GetVRAMAddress.o)
+                              graphic_functions.o (symbol from plugin) (_GetVRAMAddress)
+C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSGetData1.o)
+                              Game.o (symbol from plugin) (_MCSGetData1)
+C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(Bdisp_AllClr_VRAM.o)
+                              main.o (symbol from plugin) (_Bdisp_AllClr_VRAM)
+C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSPutVar2.o)
+                              Game.o (symbol from plugin) (_MCSPutVar2)
+C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSDelVar2.o)
+                              Game.o (symbol from plugin) (_MCSDelVar2)
+C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(SetQuitHandler.o)
+                              main.o (symbol from plugin) (_SetQuitHandler)
+C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(DrawFrame.o)
+                              main.o (symbol from plugin) (_DrawFrame)
+C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCS_CreateDirectory.o)
+                              Game.o (symbol from plugin) (_MCS_CreateDirectory)
+C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(crt0.o)
+                              (initialize)
+C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(sprite.o)
+                              main.o (symbol from plugin) (_VRAM_CopySprite)
+C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(memcpy.o)
+                              C:\Users\Konstantin\AppData\Local\Temp\2048.bin.xF1XpG.ltrans0.ltrans.o (_memcpy)
+c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o)
+                              C:\Users\Konstantin\AppData\Local\Temp\2048.bin.xF1XpG.ltrans0.ltrans.o (___umoddi3)
+c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_udivsi3.o)
+                              c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o) (___udivsi3)
+c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_udiv_qrnnd_16.o)
+                              c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o) (___udiv_qrnnd_16)
+c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_clz.o)
+                              c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o) (___clz_tab)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+rom              0x00300000         0x00100000         xr
+ram              0x08100004         0x00010000         xrw
+ilram            0xe5200000         0x00001000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD Game.o
+LOAD C:\Users\Konstantin\AppData\Local\Temp\2048.bin.xF1XpG.ltrans0.ltrans.o
+LOAD graphic_functions.o
+LOAD main.o
+LOAD renderer.o
+LOAD rng.o
+LOAD C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libc.a
+LOAD C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a
+LOAD c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a
+
+.text           0x00300000     0x18ec
+ *(.pretext)
+ .pretext       0x00300000       0x6c C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(crt0.o)
+                0x00300000                initialize
+ *(.text)
+ .text          0x0030006c      0xea8 C:\Users\Konstantin\AppData\Local\Temp\2048.bin.xF1XpG.ltrans0.ltrans.o
+ .text          0x00300f14       0x10 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(GetKey.o)
+                0x00300f14                _GetKey
+ .text          0x00300f24       0x10 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(Bdisp_EnableColor.o)
+                0x00300f24                _Bdisp_EnableColor
+ .text          0x00300f34       0x10 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(RTC_GetTicks.o)
+                0x00300f34                _RTC_GetTicks
+ .text          0x00300f44       0x10 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSGetDlen2.o)
+                0x00300f44                _MCSGetDlen2
+ .text          0x00300f54       0x10 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(GetVRAMAddress.o)
+                0x00300f54                _GetVRAMAddress
+ .text          0x00300f64       0x10 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSGetData1.o)
+                0x00300f64                _MCSGetData1
+ .text          0x00300f74       0x10 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(Bdisp_AllClr_VRAM.o)
+                0x00300f74                _Bdisp_AllClr_VRAM
+ .text          0x00300f84       0x10 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSPutVar2.o)
+                0x00300f84                _MCSPutVar2
+ .text          0x00300f94       0x10 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSDelVar2.o)
+                0x00300f94                _MCSDelVar2
+ .text          0x00300fa4       0x10 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(SetQuitHandler.o)
+                0x00300fa4                _SetQuitHandler
+ .text          0x00300fb4       0x10 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(DrawFrame.o)
+                0x00300fb4                _DrawFrame
+ .text          0x00300fc4       0x10 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCS_CreateDirectory.o)
+                0x00300fc4                _MCS_CreateDirectory
+ .text          0x00300fd4        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(crt0.o)
+ *fill*         0x00300fd4        0xc 
+ .text          0x00300fe0       0xa0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(memcpy.o)
+                0x00300fe0                _memcpy
+ .text          0x00301080      0x220 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o)
+                0x00301080                ___umoddi3
+ .text          0x003012a0       0x6c c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_udivsi3.o)
+                0x003012c2                ___udivsi3
+ *fill*         0x0030130c        0x4 
+ .text          0x00301310       0x60 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_udiv_qrnnd_16.o)
+                0x00301310                ___udiv_qrnnd_16
+ .text          0x00301370        0x0 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_clz.o)
+ *(.text.*)
+ .text.startup  0x00301370      0x57c C:\Users\Konstantin\AppData\Local\Temp\2048.bin.xF1XpG.ltrans0.ltrans.o
+                0x00301370                _main
+
+.ilram          0xe5200000        0x0 load address 0x003018ec
+                0x0030c32c                _ilramld = LOADADDR (.data)
+                0xe5200000                _silram = .
+ *(.ilram)
+ *(.ilram.*)
+                0xe5200000                _eilram = .
+
+.rodata         0x003018ec     0xa992
+ *(.rodata)
+ .rodata        0x003018ec     0xa884 C:\Users\Konstantin\AppData\Local\Temp\2048.bin.xF1XpG.ltrans0.ltrans.o
+ .rodata        0x0030c170      0x100 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_clz.o)
+                0x0030c170                ___clz_tab
+ *(.rodata.*)
+ .rodata.str1.4
+                0x0030c270        0xe C:\Users\Konstantin\AppData\Local\Temp\2048.bin.xF1XpG.ltrans0.ltrans.o
+
+.eh_frame       0x0030c280       0xac
+ .eh_frame      0x0030c280       0xac c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o)
+
+.data           0x08100004        0x0 load address 0x0030c32c
+                0x0030c32c                _datald = LOADADDR (.data)
+                0x08100004                _sdata = .
+ *(.data)
+ .data          0x08100004        0x0 C:\Users\Konstantin\AppData\Local\Temp\2048.bin.xF1XpG.ltrans0.ltrans.o
+ .data          0x08100004        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(GetKey.o)
+ .data          0x08100004        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(Bdisp_EnableColor.o)
+ .data          0x08100004        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(RTC_GetTicks.o)
+ .data          0x08100004        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSGetDlen2.o)
+ .data          0x08100004        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(GetVRAMAddress.o)
+ .data          0x08100004        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSGetData1.o)
+ .data          0x08100004        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(Bdisp_AllClr_VRAM.o)
+ .data          0x08100004        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSPutVar2.o)
+ .data          0x08100004        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSDelVar2.o)
+ .data          0x08100004        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(SetQuitHandler.o)
+ .data          0x08100004        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(DrawFrame.o)
+ .data          0x08100004        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCS_CreateDirectory.o)
+ .data          0x08100004        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(crt0.o)
+ .data          0x08100004        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(memcpy.o)
+ .data          0x08100004        0x0 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o)
+ .data          0x08100004        0x0 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_udivsi3.o)
+ .data          0x08100004        0x0 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_udiv_qrnnd_16.o)
+ .data          0x08100004        0x0 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_clz.o)
+ *(.data.*)
+                0x08100004                _edata = .
+
+.ctors          0x08100004        0x4 load address 0x0030c32c
+ .ctors         0x08100004        0x4 C:\Users\Konstantin\AppData\Local\Temp\2048.bin.xF1XpG.ltrans0.ltrans.o
+
+.bss            0x08100008       0x50 load address 0x0030c330
+                0x08100008                _bbss = .
+ *(.bss)
+ .bss           0x08100008       0x50 C:\Users\Konstantin\AppData\Local\Temp\2048.bin.xF1XpG.ltrans0.ltrans.o
+ .bss           0x08100058        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(GetKey.o)
+ .bss           0x08100058        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(Bdisp_EnableColor.o)
+ .bss           0x08100058        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(RTC_GetTicks.o)
+ .bss           0x08100058        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSGetDlen2.o)
+ .bss           0x08100058        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(GetVRAMAddress.o)
+ .bss           0x08100058        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSGetData1.o)
+ .bss           0x08100058        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(Bdisp_AllClr_VRAM.o)
+ .bss           0x08100058        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSPutVar2.o)
+ .bss           0x08100058        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCSDelVar2.o)
+ .bss           0x08100058        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(SetQuitHandler.o)
+ .bss           0x08100058        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(DrawFrame.o)
+ .bss           0x08100058        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(MCS_CreateDirectory.o)
+ .bss           0x08100058        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(crt0.o)
+ .bss           0x08100058        0x0 C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/sdk/lib\libfxcg.a(memcpy.o)
+ .bss           0x08100058        0x0 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o)
+ .bss           0x08100058        0x0 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_udivsi3.o)
+ .bss           0x08100058        0x0 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_udiv_qrnnd_16.o)
+ .bss           0x08100058        0x0 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_clz.o)
+ *(.bss*)
+ *(COMMON)
+                0x08100058                _ebss = .
+OUTPUT(C:/Konstantin/GitHub/casio-prizm-2048/2048-fxcg/2048.bin binary)
+
+.comment        0x00000000       0x48
+ .comment       0x00000000       0x18 C:\Users\Konstantin\AppData\Local\Temp\2048.bin.xF1XpG.ltrans0.ltrans.o
+ .comment       0x00000018       0x18 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o)
+ .comment       0x00000030       0x18 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_clz.o)
+
+.debug_info     0x00000000      0x55f
+ .debug_info    0x00000000      0x496 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o)
+ .debug_info    0x00000496       0xc9 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_clz.o)
+
+.debug_abbrev   0x00000000      0x23f
+ .debug_abbrev  0x00000000      0x1cf c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o)
+ .debug_abbrev  0x000001cf       0x70 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_clz.o)
+
+.debug_loc      0x00000000      0x712
+ .debug_loc     0x00000000      0x712 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o)
+
+.debug_aranges  0x00000000       0x38
+ .debug_aranges
+                0x00000000       0x20 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o)
+ .debug_aranges
+                0x00000020       0x18 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_clz.o)
+
+.debug_ranges   0x00000000      0x110
+ .debug_ranges  0x00000000      0x110 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o)
+
+.debug_line     0x00000000      0x306
+ .debug_line    0x00000000      0x2a3 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o)
+ .debug_line    0x000002a3       0x63 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_clz.o)
+
+.debug_str      0x00000000      0x39f
+ .debug_str     0x00000000      0x211 c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_umoddi3.o)
+ .debug_str     0x00000211      0x18e c:/konstantin/github/casio-prizm-2048/2048-fxcg/sdk/bin/../lib/gcc/sh3eb-elf/10.1.0\libgcc.a(_clz.o)

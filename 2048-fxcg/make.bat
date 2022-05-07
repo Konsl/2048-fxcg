@@ -1,0 +1,1 @@
+.\sdk\bin\make.exe %*
