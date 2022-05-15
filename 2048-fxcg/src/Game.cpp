@@ -8,10 +8,17 @@
 #include "tiles.h"
 #include "graphic_functions.h"
 #include "resources.h"
+#include "SaveFile.h"
 
 Game::Game() : mergeTable(0), valid(false), scoreTextWidth(0), scoreTextValid(false), highScoreTextWidth(0), highScoreTextValid(false), freeCells(16), score(0), highScore(0), won(false), lost(false), keepPlaying(false)
 {
 	if (!TryLoad()) {
+		SaveFile::CreateBackup();
+
+		freeCells = 16;
+		score = highScore = 0;
+		won = lost = keepPlaying = false;
+
 		for (unsigned char x = 0; x < 4; x++)
 			for (unsigned char y = 0; y < 4; y++) {
 				unsigned char index = y * 4 + x;
@@ -351,40 +358,10 @@ void Game::SetMerged(unsigned char index)
 
 void Game::Save()
 {
-	unsigned char buf[27] = { 0 };
-	memcpy(buf, &highScore, 4);
-	memcpy(buf + 4, &score, 4);
-	memcpy(buf + 8, grid, 16);
-	memcpy(buf + 24, &won, 1);
-	memcpy(buf + 25, &lost, 1);
-	memcpy(buf + 26, &keepPlaying, 1);
-
-	if (MCS_CreateDirectory(DIRNAME))
-		MCSDelVar2(DIRNAME, GAMEFILE);
-	MCSPutVar2(DIRNAME, GAMEFILE, sizeof buf, buf);
+	SaveFile::Save(*this);
 }
 
 bool Game::TryLoad()
 {
-	int size;
-	if (MCSGetDlen2(DIRNAME, GAMEFILE, &size)) return false;
-	if (size < 27) return false;
-
-	unsigned char buf[27];
-	if (MCSGetData1(0, 27, buf)) return false;
-
-	memcpy(&highScore, buf, 4);
-	memcpy(&score, buf + 4, 4);
-	memcpy(grid, buf + 8, 16);
-	memcpy(&won, buf + 24, 1);
-	memcpy(&lost, buf + 25, 1);
-	memcpy(&keepPlaying, buf + 26, 1);
-
-	freeCells = 0;
-	for (unsigned char x = 0; x < 4; x++)
-		for (unsigned char y = 0; y < 4; y++)
-			if (!grid[y * 4 + x])
-				freeCells++;
-
-	return true;
+	return SaveFile::TryLoad(*this);
 }

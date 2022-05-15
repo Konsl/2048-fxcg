@@ -18,3 +18,5 @@
 #define TILE_32768		15
 #define TILE_65536		16
 #define TILE_131072		17
+
+#define TILE_MAX		TILE_131072

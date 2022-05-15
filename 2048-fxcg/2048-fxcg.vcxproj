@@ -102,6 +102,7 @@
     <ClCompile Include="src\graphic_functions.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\renderer.cpp" />
+    <ClCompile Include="src\SaveFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h" />
@@ -109,6 +110,7 @@
     <ClInclude Include="src\graphic_functions.h" />
     <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\rng.h" />
+    <ClInclude Include="src\SaveFile.h" />
     <ClInclude Include="src\screen.h" />
     <ClInclude Include="src\stdint.h" />
     <ClInclude Include="src\tiles.h" />

@@ -1,8 +1,5 @@
 #pragma once
 
-#define DIRNAME (unsigned char*)"@2048"
-#define GAMEFILE (unsigned char*)"Save"
-
 class Game
 {
 public:
@@ -61,4 +58,6 @@ private:
 	bool won;
 	bool lost;
 	bool keepPlaying;
+
+	friend class SaveFile;
 };
