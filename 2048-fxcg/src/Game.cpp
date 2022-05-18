@@ -10,7 +10,7 @@
 #include "resources.h"
 #include "SaveFile.h"
 
-Game::Game() : mergeTable(0), undoCount(0), undoIndex(0), valid(false), scoreTextWidth(0), scoreTextValid(false), highScoreTextWidth(0), highScoreTextValid(false)
+Game::Game() : mergeTable(0), undoCount(0), undoIndex(0), valid(false), scoreTextWidth(0), scoreTextValid(false), highScoreTextWidth(0), highScoreTextValid(false), undoCountTextValid(false)
 {
 	ClearUndoData();
 
@@ -103,6 +103,13 @@ void Game::Render()
 		highScoreTextWidth = textWidth;
 		highScoreTextValid = true;
 	}
+
+	if (!undoCountTextValid) {
+		if (undoCount < 6)
+			VRAM_CopySprite(UNDO_COUNT_TEXTURES[undoCount], RECT(UNDO_COUNT));
+
+		undoCountTextValid = true;
+	}
 }
 
 void Game::Invalidate()
@@ -118,6 +125,11 @@ void Game::InvalidateScore()
 void Game::InvalidateHighScore()
 {
 	highScoreTextValid = false;
+}
+
+void Game::InvalidateUndoCount()
+{
+	undoCountTextValid = false;
 }
 
 bool Game::ShowWinDialog()
@@ -172,6 +184,7 @@ bool Game::Undo()
 				freeCells++;
 
 	undoCount--;
+	InvalidateUndoCount();
 	undoIndex = (undoIndex + 4) % 5;
 
 	InvalidateScore();
@@ -181,8 +194,10 @@ bool Game::Undo()
 
 void Game::CreateUndoPoint()
 {
-	if (undoCount < 5)
+	if (undoCount < 5) {
 		undoCount++;
+		InvalidateUndoCount();
+	}
 
 	undoIndex = (undoIndex + 1) % 5;
 

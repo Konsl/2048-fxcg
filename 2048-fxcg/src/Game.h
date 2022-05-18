@@ -22,6 +22,7 @@ public:
 	void Invalidate();
 	void InvalidateScore();
 	void InvalidateHighScore();
+	void InvalidateUndoCount();
 
 	bool ShowWinDialog();
 	bool ShowLoseDialog();
@@ -68,6 +69,7 @@ private:
 	bool scoreTextValid;
 	unsigned int highScoreTextWidth;
 	bool highScoreTextValid;
+	bool undoCountTextValid;
 
 	unsigned char freeCells;
 

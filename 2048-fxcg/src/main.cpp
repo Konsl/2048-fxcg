@@ -25,6 +25,9 @@ int main() {
 
 	RenderBackground();
 
+	RenderRoundedRect2Alpha(RECT(UNDO_ARROW_BUTTON), COLOR_DIALOG_BUTTON);
+	VRAM_CopySprite(UNDO_ARROW_TEXTURE, RECT(UNDO_ARROW));
+
 	game = Game();
 	bool left, up, right, down, moved = true;
 
