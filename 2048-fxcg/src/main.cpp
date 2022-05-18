@@ -44,13 +44,17 @@ int main() {
 				VRAM_CopySprite(TRY_AGAIN_EXE_TEXTURE, RECT(TRY_AGAIN_EXE));
 
 				k = KEY_CTRL_NOP;
-				while(k != KEY_CTRL_EXE)
+				while (k != KEY_CTRL_EXE && k != KEY_CTRL_DEL)
 					GetKey(&k);
 
 				RenderBoard();
 
 				game.Invalidate();
-				game.Restart();
+
+				if (k == KEY_CTRL_EXE)
+					game.Restart();
+				else
+					game.Undo();
 
 				game.GetAvailableMoves(&left, &up, &right, &down);
 				game.Render();
@@ -67,15 +71,19 @@ int main() {
 				VRAM_CopySprite(TRY_AGAIN_EXIT_TEXTURE, RECT(TRY_AGAIN_EXIT));
 
 				k = KEY_CTRL_NOP;
-				while (k != KEY_CTRL_EXE && k != KEY_CTRL_EXIT)
+				while (k != KEY_CTRL_EXE && k != KEY_CTRL_EXIT && k != KEY_CTRL_DEL)
 					GetKey(&k);
 
 				RenderBoard();
 
 				game.Invalidate();
 
-				if (k == KEY_CTRL_EXIT) {
-					game.Restart();
+				if (k == KEY_CTRL_EXIT || k != KEY_CTRL_DEL) {
+					if (k == KEY_CTRL_EXE)
+						game.Restart();
+					else
+						game.Undo();
+
 					game.GetAvailableMoves(&left, &up, &right, &down);
 				}
 				else
@@ -93,6 +101,8 @@ int main() {
 		if (k == KEY_CTRL_UP && up) { game.MoveUp(); moved = true; }
 		if (k == KEY_CTRL_RIGHT && right) { game.MoveRight(); moved = true; }
 		if (k == KEY_CTRL_DOWN && down) { game.MoveDown(); moved = true; }
+
+		if (k == KEY_CTRL_DEL && game.CanUndo()) { game.Undo(); moved = true; }
 	}
 
 	return 0;

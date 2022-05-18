@@ -10,22 +10,26 @@
 #include "resources.h"
 #include "SaveFile.h"
 
-Game::Game() : mergeTable(0), valid(false), scoreTextWidth(0), scoreTextValid(false), highScoreTextWidth(0), highScoreTextValid(false), freeCells(16), score(0), highScore(0), won(false), lost(false), keepPlaying(false)
+Game::Game() : mergeTable(0), undoCount(0), undoIndex(0), valid(false), scoreTextWidth(0), scoreTextValid(false), highScoreTextWidth(0), highScoreTextValid(false)
 {
+	ClearUndoData();
+
 	if (!TryLoad()) {
 		SaveFile::CreateBackup();
 
 		freeCells = 16;
-		score = highScore = 0;
-		won = lost = keepPlaying = false;
+		state.score = highScore = 0;
+		state.won = state.lost = state.keepPlaying = false;
 
 		for (unsigned char x = 0; x < 4; x++)
 			for (unsigned char y = 0; y < 4; y++) {
 				unsigned char index = y * 4 + x;
 
-				grid[index] = TILE_0;
+				state.grid[index] = TILE_0;
 				renderedGrid[index] = 0;
 			}
+
+		ClearUndoData();
 
 		AddRandomTile();
 		AddRandomTile();
@@ -34,7 +38,7 @@ Game::Game() : mergeTable(0), valid(false), scoreTextWidth(0), scoreTextValid(fa
 
 unsigned char* Game::GetGrid()
 {
-	return grid;
+	return state.grid;
 }
 
 unsigned char Game::GetFreeCells()
@@ -48,10 +52,10 @@ void Game::Render()
 		for (unsigned char y = 0; y < 4; y++) {
 			unsigned char index = y * 4 + x;
 
-			if (!valid || (grid[index] != renderedGrid[index])) {
-				renderedGrid[index] = grid[index];
+			if (!valid || (state.grid[index] != renderedGrid[index])) {
+				renderedGrid[index] = state.grid[index];
 
-				RenderTile(x, y, grid[index]);
+				RenderTile(x, y, state.grid[index]);
 			}
 		}
 	valid = true;
@@ -59,7 +63,7 @@ void Game::Render()
 	if (!scoreTextValid) {
 		FillRectangle(48 - scoreTextWidth / 2, 74, scoreTextWidth, SCORE_FONT_HEIGHT, COLOR_FIELD);
 
-		unsigned int val = score;
+		unsigned int val = state.score;
 
 		unsigned char buf[10] = { 0 };
 		unsigned char i = 9;
@@ -118,12 +122,12 @@ void Game::InvalidateHighScore()
 
 bool Game::ShowWinDialog()
 {
-	return won && !keepPlaying;
+	return state.won && !state.keepPlaying;
 }
 
 bool Game::ShowLoseDialog()
 {
-	return lost;
+	return state.lost;
 }
 
 void Game::Restart()
@@ -134,11 +138,11 @@ void Game::Restart()
 
 	for (unsigned char x = 0; x < 4; x++)
 		for (unsigned char y = 0; y < 4; y++)
-			grid[y * 4 + x] = 0;
+			state.grid[y * 4 + x] = 0;
 
 	freeCells = 16;
-	score = 0;
-	won = lost = keepPlaying = false;
+	state.score = 0;
+	state.won = state.lost = state.keepPlaying = false;
 
 	AddRandomTile();
 	AddRandomTile();
@@ -146,7 +150,57 @@ void Game::Restart()
 
 void Game::KeepPlaying()
 {
-	keepPlaying = true;
+	state.keepPlaying = true;
+}
+
+bool Game::CanUndo()
+{
+	return undoCount > 0;
+}
+
+bool Game::Undo()
+{
+	if (!CanUndo())
+		return false;
+
+	memcpy(&state, &undoData[undoIndex], sizeof(State));
+
+	freeCells = 0;
+	for (unsigned char x = 0; x < 4; x++)
+		for (unsigned char y = 0; y < 4; y++)
+			if (!state.grid[y * 4 + x])
+				freeCells++;
+
+	undoCount--;
+	undoIndex = (undoIndex + 4) % 5;
+
+	InvalidateScore();
+
+	return true;
+}
+
+void Game::CreateUndoPoint()
+{
+	if (undoCount < 5)
+		undoCount++;
+
+	undoIndex = (undoIndex + 1) % 5;
+
+	memcpy(&undoData[undoIndex], &state, sizeof(State));
+}
+
+void Game::ClearUndoData()
+{
+	undoCount = 0;
+	undoIndex = 0;
+
+	for (unsigned char i = 0; i < 5; i++) {
+		for (unsigned char j = 0; j < 16; j++)
+			undoData[i].grid[j] = TILE_0;
+
+		undoData[i].score = 0;
+		undoData[i].won = undoData[i].lost = undoData[i].keepPlaying = false;
+	}
 }
 
 void Game::AddRandomTile()
@@ -155,12 +209,12 @@ void Game::AddRandomTile()
 		unsigned char d = (unsigned char)(xorshift128plus() % freeCells);
 
 		for (unsigned char i = 0; i < 16; i++)
-			if (!grid[i]) {
+			if (!state.grid[i]) {
 				if (d)
 					d--;
 				else {
 					unsigned char type = (unsigned char)(xorshift128plus() % 10) == 0 ? TILE_4 : TILE_2;
-					grid[i] = type;
+					state.grid[i] = type;
 					freeCells--;
 
 					break;
@@ -175,29 +229,29 @@ void Game::GetAvailableMoves(bool* left, bool* up, bool* right, bool* down)
 
 	for (unsigned char x = 0; x < 4; x++)
 		for (unsigned char y = 0; y < 4; y++) {
-			unsigned char v = grid[y * 4 + x];
+			unsigned char v = state.grid[y * 4 + x];
 
 			if (v) {
 				if (left && x > 0) {
-					unsigned char vLeft = grid[y * 4 + (x - 1)];
+					unsigned char vLeft = state.grid[y * 4 + (x - 1)];
 
 					if (!vLeft || vLeft == v)
 						*left = true;
 				}
 				if (up && y > 0) {
-					unsigned char vTop = grid[(y - 1) * 4 + x];
+					unsigned char vTop = state.grid[(y - 1) * 4 + x];
 
 					if (!vTop || vTop == v)
 						*up = true;
 				}
 				if (right && x < 3) {
-					unsigned char vRight = grid[y * 4 + (x + 1)];
+					unsigned char vRight = state.grid[y * 4 + (x + 1)];
 
 					if (!vRight || vRight == v)
 						*right = true;
 				}
 				if (down && y < 3) {
-					unsigned char vBottom = grid[(y + 1) * 4 + x];
+					unsigned char vBottom = state.grid[(y + 1) * 4 + x];
 
 					if (!vBottom || vBottom == v)
 						*down = true;
@@ -206,22 +260,23 @@ void Game::GetAvailableMoves(bool* left, bool* up, bool* right, bool* down)
 		}
 
 	if (*left == false && *up == false && *right == false && *down == false)
-		lost = true;
+		state.lost = true;
 }
 
 void Game::MoveLeft()
 {
+	CreateUndoPoint();
 	ClearMergeTable();
 
 	for (unsigned char x = 0; x < 4; x++)
 		for (unsigned char y = 0; y < 4; y++) {
-			unsigned char v = grid[y * 4 + x];
+			unsigned char v = state.grid[y * 4 + x];
 
 			if (v) {
 				unsigned char move = 0;
 				for (; move < x; move++) {
 					unsigned char other = y * 4 + (x - move - 1);
-					unsigned char otherV = grid[other];
+					unsigned char otherV = state.grid[other];
 
 					if (otherV && (otherV != v || IsMerged(other)))
 						break;
@@ -236,17 +291,18 @@ void Game::MoveLeft()
 
 void Game::MoveUp()
 {
+	CreateUndoPoint();
 	ClearMergeTable();
 
 	for (unsigned char x = 0; x < 4; x++)
 		for (unsigned char y = 0; y < 4; y++) {
-			unsigned char v = grid[y * 4 + x];
+			unsigned char v = state.grid[y * 4 + x];
 
 			if (v) {
 				unsigned char move = 0;
 				for (; move < y; move++) {
 					unsigned char other = (y - move - 1) * 4 + x;
-					unsigned char otherV = grid[other];
+					unsigned char otherV = state.grid[other];
 
 					if (otherV && (otherV != v || IsMerged(other)))
 						break;
@@ -261,17 +317,18 @@ void Game::MoveUp()
 
 void Game::MoveRight()
 {
+	CreateUndoPoint();
 	ClearMergeTable();
 
 	for (signed char x = 3; x >= 0; x--)
 		for (unsigned char y = 0; y < 4; y++) {
-			unsigned char v = grid[y * 4 + x];
+			unsigned char v = state.grid[y * 4 + x];
 
 			if (v) {
 				unsigned char move = 0;
 				for (; move < 3 - x; move++) {
 					unsigned char other = y * 4 + (x + move + 1);
-					unsigned char otherV = grid[other];
+					unsigned char otherV = state.grid[other];
 
 					if (otherV && (otherV != v || IsMerged(other)))
 						break;
@@ -286,17 +343,18 @@ void Game::MoveRight()
 
 void Game::MoveDown()
 {
+	CreateUndoPoint();
 	ClearMergeTable();
 
 	for (unsigned char x = 0; x < 4; x++)
 		for (signed char y = 3; y >= 0; y--) {
-			unsigned char v = grid[y * 4 + x];
+			unsigned char v = state.grid[y * 4 + x];
 
 			if (v) {
 				unsigned char move = 0;
 				for (; move < 3 - y; move++) {
 					unsigned char other = (y + move + 1) * 4 + x;
-					unsigned char otherV = grid[other];
+					unsigned char otherV = state.grid[other];
 
 					if (otherV && (otherV != v || IsMerged(other)))
 						break;
@@ -312,31 +370,31 @@ void Game::MoveDown()
 void Game::Move(unsigned char src, unsigned char dest)
 {
 	if (src != dest) {
-		if (grid[src] == grid[dest]) {
-			grid[dest] = grid[src] + 1;
+		if (state.grid[src] == state.grid[dest]) {
+			state.grid[dest] = state.grid[src] + 1;
 
 			SetMerged(dest);
 			freeCells++;
 
-			IncrementScore(1 << grid[dest]);
+			IncrementScore(1 << state.grid[dest]);
 
-			if (grid[dest] == TILE_2048)
-				won = true;
+			if (state.grid[dest] == TILE_2048)
+				state.won = true;
 		}
 		else
-			grid[dest] = grid[src];
+			state.grid[dest] = state.grid[src];
 
-		grid[src] = TILE_0;
+		state.grid[src] = TILE_0;
 	}
 }
 
 void Game::IncrementScore(unsigned int amount)
 {
-	score += amount;
+	state.score += amount;
 	InvalidateScore();
 
-	if (score > highScore) {
-		highScore = score;
+	if (state.score > highScore) {
+		highScore = state.score;
 		InvalidateHighScore();
 	}
 }

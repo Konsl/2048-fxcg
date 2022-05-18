@@ -1,4 +1,14 @@
 #pragma once
+#include "vsdefs.h"
+
+struct State
+{
+	unsigned int score;
+	unsigned char grid[16];
+	bool won;
+	bool lost;
+	bool keepPlaying;
+} __attribute__((packed));
 
 class Game
 {
@@ -18,6 +28,11 @@ public:
 
 	void Restart();
 	void KeepPlaying();
+
+	bool CanUndo();
+	bool Undo();
+	void CreateUndoPoint();
+	void ClearUndoData();
 
 	void AddRandomTile();
 	void GetAvailableMoves(bool* left, bool* up, bool* right, bool* down);
@@ -39,8 +54,12 @@ public:
 	bool TryLoad();
 
 private:
-	unsigned char grid[16];
+	State state;
 	unsigned short mergeTable;
+
+	State undoData[5];
+	unsigned char undoCount;
+	signed char undoIndex;
 
 	unsigned char renderedGrid[16];
 	bool valid;
@@ -52,12 +71,7 @@ private:
 
 	unsigned char freeCells;
 
-	unsigned int score;
 	unsigned int highScore;
-
-	bool won;
-	bool lost;
-	bool keepPlaying;
 
 	friend class SaveFile;
 };

@@ -114,6 +114,7 @@
     <ClInclude Include="src\screen.h" />
     <ClInclude Include="src\stdint.h" />
     <ClInclude Include="src\tiles.h" />
+    <ClInclude Include="src\vsdefs.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\rng.cpp" />

@@ -3,8 +3,9 @@
 
 #include <fxcg/file.h>
 #include <alloca.h>
-void* __builtin_alloca(unsigned int size);
 #include <string.h>
+
+const SaveFileVersion SaveFile::CurrentVersion = SaveFileVersion::VERSION_1_0_2;
 
 bool SaveFile::TryLoad(Game& game)
 {
@@ -24,7 +25,9 @@ bool SaveFile::TryLoad(Game& game)
 
 	switch (version) {
 	case SaveFileVersion::VERSION_1_0_0:
-		return TryLoadV0100(game, buf + 4);
+		return TryLoadV0100(game, (Version0100Data*)(buf + 4));
+	case SaveFileVersion::VERSION_1_0_2:
+		return TryLoadV0102(game, (Version0102Data*)(buf + 4));
 
 	default:
 		return false;
@@ -33,16 +36,19 @@ bool SaveFile::TryLoad(Game& game)
 
 void SaveFile::Save(Game& game)
 {
-	unsigned char buf[4 + 27];
-	SaveFileVersion version = SaveFileVersion::VERSION_1_0_0;
-	memcpy(buf, &version, 4);
+	unsigned char buf[4 + sizeof(Version0102Data)] = { 0 };
+	Version0102Data* data = (Version0102Data*)(buf + 4);
+	memcpy(buf, &CurrentVersion, 4);
 
-	memcpy(buf + 4, &game.highScore, 4);
-	memcpy(buf + 8, &game.score, 4);
-	memcpy(buf + 12, game.grid, 16);
-	memcpy(buf + 28, &game.won, 1);
-	memcpy(buf + 29, &game.lost, 1);
-	memcpy(buf + 30, &game.keepPlaying, 1);
+	// Version 01.00 fields
+	data->v0100.highScore = game.highScore;
+	memcpy(&data->v0100.state, &game.state, sizeof(State));
+
+	// Version 01.02 fields
+	data->undoCount = game.undoCount;
+	data->undoIndex = game.undoIndex;
+
+	memcpy(data->undoData, game.undoData, 5 * sizeof(State));
 
 	if (MCS_CreateDirectory(DIRNAME))
 		MCSDelVar2(DIRNAME, SAVEFILENAME);
@@ -56,30 +62,46 @@ void SaveFile::CreateBackup()
 
 	unsigned char* buf = (unsigned char*)alloca(fileSize);
 	if (MCSGetData1(0, fileSize, buf)) return;
-	
+
 	if (MCS_CreateDirectory(DIRNAME))
 		MCSDelVar2(DIRNAME, BACKUPFILENAME);
 	MCSPutVar2(DIRNAME, BACKUPFILENAME, fileSize, buf);
 }
 
-bool SaveFile::TryLoadV0100(Game& game, unsigned char* buf)
+bool SaveFile::TryLoadV0100(Game& game, Version0100Data* data)
 {
-	memcpy(&game.highScore, buf, 4);
-	memcpy(&game.score, buf + 4, 4);
-	memcpy(game.grid, buf + 8, 16);
-	memcpy(&game.won, buf + 24, 1);
-	memcpy(&game.lost, buf + 25, 1);
-	memcpy(&game.keepPlaying, buf + 26, 1);
+	game.highScore = data->highScore;
+	memcpy(&game.state, &data->state, sizeof(State));
 
 	game.freeCells = 0;
 	for (unsigned char x = 0; x < 4; x++)
 		for (unsigned char y = 0; y < 4; y++) {
-			if (!game.grid[y * 4 + x])
+			if (!game.state.grid[y * 4 + x])
 				game.freeCells++;
 
-			if (game.grid[y * 4 + x] > TILE_MAX)
+			if (game.state.grid[y * 4 + x] > TILE_MAX)
 				return false;
 		}
+
+	return true;
+}
+
+bool SaveFile::TryLoadV0102(Game& game, Version0102Data* data)
+{
+	if (!TryLoadV0100(game, &data->v0100))
+		return false;
+
+	game.undoCount = data->undoCount;
+	game.undoIndex = data->undoIndex;
+
+	for (unsigned char i = 0; i < 5; i++) {
+		memcpy(&game.undoData[i], &data->undoData[i], sizeof(State));
+
+		for (unsigned char x = 0; x < 4; x++)
+			for (unsigned char y = 0; y < 4; y++)
+				if (game.undoData[i].grid[y * 4 + x] > TILE_MAX)
+					return false;
+	}
 
 	return true;
 }
